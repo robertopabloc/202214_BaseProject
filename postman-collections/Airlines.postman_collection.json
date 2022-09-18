@@ -1,0 +1,650 @@
+{
+	"info": {
+		"_postman_id": "79fcebd4-a685-44f1-af68-1d88eff07396",
+		"name": "Airlines",
+		"description": "Documentation for the resource Airline.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17185062"
+	},
+	"item": [
+		{
+			"name": "Add an airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"airline_id\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": \"Avianca\",\n   \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n   \"fundationDate\": \"05-12-1919\",\n   \"website\": \"https://www.avianca.com/\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines"
+					]
+				},
+				"description": "This request creates a new airline"
+			},
+			"response": [
+				{
+					"name": "Add an airline",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"name\": \"Avianca\",\n   \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n   \"fundationDate\": \"05-12-1919\",\n   \"website\": \"https://www.avianca.com/\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/ http://localhost:3000/api/v1/airlines",
+							"protocol": "/ http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Add an invalid airline",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n   \"fundationDate\": \"5 de diciembre de 1919\",\n   \"website\": \"https://www.avianca.com/\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines"
+					]
+				},
+				"description": "This request add an invalid airline"
+			},
+			"response": [
+				{
+					"name": "Add an invalid airline",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n   \"fundationDate\": \"5 de diciembre de 1919\",\n   \"website\": \"https://www.avianca.com/\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/ http://localhost:3000/api/v1/airlines",
+							"protocol": "/ http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 400,\n   \"message\": \"Invalid name for airline\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all airlines",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of airlines > ' + 0, function () {",
+							"   var data = pm.response.json()",
+							"   pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines"
+					]
+				},
+				"description": "This request get all airlines"
+			},
+			"response": [
+				{
+					"name": "Get all airlines",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/airlines",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"airlines"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n   {\n        \"id\": \"14f05d0e-1275-11ed-861d-0242ac120002\",\n        \"name\": \"Avianca\",\n        \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n        \"fundationDate\": \"05-12-1919\",\n        \"website\": \"https://www.avianca.com/\",\n        \"airports\": [\n           {\n               \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n               \"name\": \"El Dorado\",\n               \"code\": 1931,\n               \"country\": \"Colombia\",\n               \"city\": \"Bogotá\"\n           },\n           {\n               \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n               \"name\": \"El Dorado 2\",\n               \"code\": 1931,\n               \"country\": \"Colombia\",\n               \"city\": \"Bogotá\"\n           }\n       ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get one airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{airline_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{airline_id}}"
+					]
+				},
+				"description": "This request get one airline"
+			},
+			"response": [
+				{
+					"name": "Get one airline",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "/ http://localhost:3000/api/v1/airlines/",
+							"protocol": "/ http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"name\": \"Avianca\",\n   \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n   \"fundationDate\": \"05-12-1919\",\n   \"website\": \"https://www.avianca.com/\",\n   \"airports\": [\n       {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"name\": \"El Dorado\",\n            \"code\": 1931,\n            \"country\": \"Colombia\",\n            \"city\": \"Bogotá\"\n        },\n        {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"name\": \"El Dorado 2\",\n            \"code\": 1931,\n            \"country\": \"Colombia\",\n            \"city\": \"Bogotá\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get an invalid airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The airline with the given id was not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "This request get an invalid airline"
+			},
+			"response": [
+				{
+					"name": "Get an invalid airline",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/airlines/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"airlines",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"The airline with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update an airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"name\": \"Avianca_Latam\",\n   \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n   \"fundationDate\": \"05-12-1919\",\n   \"website\": \"https://www.avianca.com/\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{airline_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{airline_id}}"
+					]
+				},
+				"description": "This request update an airline"
+			},
+			"response": [
+				{
+					"name": "Update an airline",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"name\": \"Avianca_Latam\",\n   \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n   \"fundationDate\": \"05-12-1919\",\n   \"website\": \"https://www.avianca.com/\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "/ http://localhost:3000/api/v1/airlines/",
+							"protocol": "/ http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n   \"name\": \"Avianca_Latam\",\n   \"description\": \"Linea Aérea Nacional de Colombia, propiedad de la sociedad británica​ Avianca Group. Fundada en 1919 bajo el nombre de SCADTA, es la segunda aerolínea existente más antigua del mundo tras KLM, la cual fue fundada solo 58 días antes, y la más antigua a nivel mundial con operaciones ininterrumpidas\",\n   \"fundationDate\": \"05-12-1919\",\n   \"website\": \"https://www.avianca.com/\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update an invalid airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The airline with the given id was not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update an invalid airline",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "/ http://localhost:3000/api/v1/airlines/00000000-0000-0000-0000-000000000000",
+							"protocol": "/ http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"The airline with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete an airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/{{airline_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"{{airline_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete an airline",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "/ http://localhost:3000/api/v1/airlines/",
+							"protocol": "/ http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								""
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete an invalid airline",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The airline with the given id was not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/airlines/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"airlines",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete an invalid airline",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "/ http://localhost:3000/api/v1/airlines/00000000-0000-0000-0000-000000000000",
+							"protocol": "/ http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"airlines",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"The airline with the given id was not found\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/ http://localhost:3000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "airline_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
